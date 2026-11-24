@@ -18,46 +18,42 @@
       <div class="section-kicker"><span class="kicker-icon">↗</span>{{ t('dashboard.score') }}</div>
       <div class="score-value">{{ score() }}<span>%</span></div>
       <p>{{ t('dashboard.scoreHint') }}</p>
-      <div class="score-trend"><span>↗ 4,2 pts</span> {{ t('dashboard.trend') }}</div>
+      <div class="score-trend">{{ t('dashboard.reviewPending') }}</div>
     </div>
     <div class="score-visual" aria-hidden="true">
       <svg viewBox="0 0 260 155" class="score-arc">
         <path class="arc-track" d="M25 130a105 105 0 0 1 210 0"/>
         <path class="arc-value" d="M25 130a105 105 0 0 1 210 0" pathLength="100" [style.stroke-dasharray]="score() + ', 100'"/>
       </svg>
-      <div class="arc-label"><strong>{{ score() }}<span>%</span></strong><small>+4,2 <span>↗</span></small></div>
+      <div class="arc-label"><strong>{{ score() }}<span>%</span></strong></div>
       <span class="arc-tick tick-start">0</span><span class="arc-tick tick-end">100</span>
     </div>
     <div class="score-side-note">
       <span class="note-check"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></span>
-      <div><strong>Bonne progression</strong><span>Votre score progresse depuis le dernier mois.</span></div>
+      <div><strong>Analyse à démarrer</strong><span>Les références restent à valider avant tout calcul de conformité.</span></div>
     </div>
   </section>
 
   <section class="kpi-grid" aria-label="Indicateurs clés">
     <article class="kpi-card">
       <div class="kpi-top"><span class="kpi-label">{{ t('dashboard.texts') }}</span><span class="kpi-icon kpi-teal"><svg viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M14 3v5h5M8 13h8M8 17h5"/></svg></span></div>
-      <div class="kpi-value">{{ statCounts().texts }}<span class="kpi-change positive">+3</span></div>
-      <span class="kpi-foot">+12 % {{ t('dashboard.trend') }}</span>
-      <svg class="sparkline spark-teal" viewBox="0 0 96 24" aria-label="Tendance en hausse"><path d="m1 19 14-4 12 3 12-10 12 5 12-7 12 2 11-7"/></svg>
+      <div class="kpi-value">{{ statCounts().texts }}</div>
+      <span class="kpi-foot">Références tunisiennes à valider</span>
     </article>
     <article class="kpi-card">
       <div class="kpi-top"><span class="kpi-label">{{ t('dashboard.unanalyzed') }}</span><span class="kpi-icon kpi-blue"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span></div>
-      <div class="kpi-value">{{ statCounts().unanalyzed }}<span class="kpi-change neutral">−2</span></div>
-      <span class="kpi-foot">2 textes à examiner</span>
-      <svg class="sparkline spark-blue" viewBox="0 0 96 24" aria-label="Tendance"><path d="m1 5 13 3 12-1 12 6 12-2 12 6 12-1 11 4"/></svg>
+      <div class="kpi-value">{{ statCounts().unanalyzed }}</div>
+      <span class="kpi-foot">À examiner avant le calcul du score</span>
     </article>
     <article class="kpi-card">
       <div class="kpi-top"><span class="kpi-label">{{ t('dashboard.noncompliant') }}</span><span class="kpi-icon kpi-red"><svg viewBox="0 0 24 24"><path d="m12 3 10 18H2z"/><path d="M12 9v5M12 18h.01"/></svg></span></div>
-      <div class="kpi-value">{{ statCounts().noncompliant }}<span class="kpi-change positive">−1</span></div>
-      <span class="kpi-foot">À traiter en priorité</span>
-      <svg class="sparkline spark-red" viewBox="0 0 96 24" aria-label="Tendance en baisse"><path d="m1 4 13 5 12-1 12 5 12-2 12 6 12-2 11 6"/></svg>
+      <div class="kpi-value">{{ statCounts().noncompliant }}</div>
+      <span class="kpi-foot">Aucun statut attribué à ce stade</span>
     </article>
     <article class="kpi-card">
       <div class="kpi-top"><span class="kpi-label">{{ t('dashboard.overdue') }}</span><span class="kpi-icon kpi-amber"><svg viewBox="0 0 24 24"><path d="M12 8v4l2.5 2.5"/><circle cx="12" cy="12" r="9"/></svg></span></div>
       <div class="kpi-value">{{ statCounts().overdue }}<span class="kpi-suffix">actions</span></div>
-      <span class="kpi-foot">1 échéance cette semaine</span>
-      <svg class="sparkline spark-amber" viewBox="0 0 96 24" aria-label="Tendance"><path d="m1 12 13-6 12 4 12-5 12 8 12-3 12 8 11-4"/></svg>
+      <span class="kpi-foot">{{ openActions().length }} actions ouvertes</span>
     </article>
   </section>
 
@@ -88,7 +84,7 @@
           }
         </div>
       </div>
-      <div class="department-foot"><span class="foot-dot"></span><span>Score moyen</span><strong>79 %</strong><span class="department-change">+ 3,6 pts ce mois</span></div>
+      <div class="department-foot"><span class="foot-dot"></span><span>{{ t('dashboard.departmentPending') }}</span></div>
     </article>
   </section>
 
@@ -96,7 +92,7 @@
     <article class="panel deadlines-panel">
       <div class="panel-heading"><div><h2>{{ t('dashboard.deadlines') }}</h2><p>Vos prochaines actions à suivre</p></div><a class="text-link" routerLink="/actions">{{ t('dashboard.viewAll') }} <span>→</span></a></div>
       <div class="deadline-list">
-        @for (deadline of deadlines; track deadline.title) {
+        @for (deadline of deadlines(); track deadline.title) {
           <a class="deadline-item" routerLink="/actions">
             <span class="deadline-date" [class]="deadline.state"><strong>{{ deadline.day }}</strong><small>{{ deadline.month }}</small></span>
             <span class="deadline-info"><strong>{{ deadline.title }}</strong><small>{{ deadline.text }}</small></span>

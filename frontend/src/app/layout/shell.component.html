@@ -12,8 +12,8 @@
     </a>
 
     <div class="organization-switcher">
-      <div class="org-monogram">TI</div>
-      <div class="org-details"><strong>{{ t('header.org') }}</strong><span>Industrie · Tunisie</span></div>
+      <div class="org-monogram">DC</div>
+      <div class="org-details"><strong>{{ t('header.org') }}</strong><span>{{ state.organization.sector }} · {{ state.organization.location }}</span></div>
       <svg class="org-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg>
     </div>
 
@@ -90,8 +90,8 @@
           @if (notificationsOpen()) {
             <div class="popover notification-popover">
               <div class="popover-heading"><strong>{{ t('header.notifications') }}</strong><span class="unread-label">2 nouvelles</span></div>
-              <div class="notification-item"><span class="notification-icon overdue-icon">!</span><div><strong>Échéance dans 3 jours</strong><p>Plan de prévention · Loi n° 2019-25</p><small>Il y a 2 h</small></div></div>
-              <div class="notification-item"><span class="notification-icon new-icon">↗</span><div><strong>Nouveau texte réglementaire</strong><p>Décret relatif aux déchets industriels</p><small>Hier</small></div></div>
+              <div class="notification-item"><span class="notification-icon overdue-icon">!</span><div><strong>Analyse réglementaire à planifier</strong><p>Gestion des déchets · Loi n° 96-41</p><small>DECOPLAST · Tunisie</small></div></div>
+              <div class="notification-item"><span class="notification-icon new-icon">↗</span><div><strong>Référence à vérifier</strong><p>Étude d’impact · Décret n° 2005-1991</p><small>Confirmer la version du JORT</small></div></div>
               <a routerLink="/actions" (click)="notificationsOpen.set(false)">Voir toutes les notifications <span>→</span></a>
             </div>
           }
@@ -108,12 +108,12 @@
         </button>
         <div class="popover-anchor user-anchor">
           <button class="user-menu-button" type="button" aria-label="Ouvrir le menu du compte" [attr.aria-expanded]="userMenuOpen()" (click)="userMenuOpen.update(v => !v); notificationsOpen.set(false)">
-            <span class="avatar">AB</span><span class="user-meta"><strong>Ayoub Ben Salem</strong><small>Responsable conformité</small></span>
+            <span class="avatar">AB</span><span class="user-meta"><strong>Ayoub Ben Salem</strong><small>Administrateur client</small></span>
             <svg class="user-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg>
           </button>
           @if (userMenuOpen()) {
             <div class="popover user-popover">
-              <div class="account-card"><span class="avatar">AB</span><div><strong>Ayoub Ben Salem</strong><small>ayoub&#64;tunis-industrie.tn</small></div></div>
+              <div class="account-card"><span class="avatar">AB</span><div><strong>Ayoub Ben Salem</strong><small>ayoub&#64;decoplast.tn</small></div></div>
               <a routerLink="/profile" (click)="userMenuOpen.set(false)">{{ t('nav.profile') }}</a>
               <button type="button" (click)="logout()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>{{ t('header.logout') }}</button>
             </div>

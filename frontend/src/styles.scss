@@ -56,7 +56,7 @@ $vigilex-material-theme: mat.define-theme((
 
 * { box-sizing: border-box; }
 html { min-width: 320px; min-height: 100%; background: var(--app-bg); scroll-behavior: smooth; }
-body { min-width: 320px; min-height: 100vh; margin: 0; background: var(--app-bg); font-size: 13px; }
+body { min-width: 320px; min-height: 100vh; margin: 0; background: var(--app-bg); font-size: 15px; }
 button,input,select,textarea { font: inherit; }
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,label:focus-visible {
   outline: 2px solid #0fa3a3;
@@ -67,6 +67,37 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,la
 [dir='rtl'] .sidebar { inset-inline-start: 0; }
 [dir='rtl'] .nav-link.active::before { border-radius: 3px 0 0 3px; }
 .mat-mdc-tooltip { --mdc-plain-tooltip-container-color: #13283d; --mdc-plain-tooltip-supporting-text-color: #fff; }
+app-root .nav-label { font-size: 13px !important; }
+app-root .nav-caption,.workspace .eyebrow,.dashboard .greeting-line { font-size: 11px !important; }
+app-root .org-details strong,.workspace-heading h1 { font-size: 14px !important; }
+app-root .org-details span,.topbar .breadcrumbs,.global-search > span,.locale-control button,
+app-root .user-meta strong,.dashboard .page-heading > div > p,.workspace-heading p,
+.primary-button,.outline-button,.search-control input,.filter-control select,
+th,td,.reference-cell,.title-cell,.table-footer,.metric-row article > span,
+.metric-row article > small,.admin-overview article > span,.admin-overview article > small,
+.analysis-card > p,.analysis-card-bottom,.text-action,.action-kpis article,
+.kanban-column > header,.calendar-weekday,.calendar-day,.report-card > p,.report-meta {
+  font-size: 12px !important;
+}
+.topbar .user-meta small,.nav-badge,.kpi-foot,.panel-heading p,.deadline-info small,
+.recent-info small,.bar-label,.date-cell,.status-pill,.type-chip,.new-badge,
+.upload-zone > p,.file-cell small,.storage-note,.report-print,.legal-notice {
+  font-size: 11px !important;
+}
+.dashboard .page-heading h1,.workspace-heading h1 { font-size: 28px !important; }
+.dashboard .kpi-label,.dashboard .legend-item,.dashboard .deadline-info strong,
+.dashboard .recent-info strong,.panel-heading h2,.analysis-card h2 {
+  font-size: 13px !important;
+}
+app-root th { font-size: 11px !important; }
+.legal-notice {
+  margin: 0;
+  border-bottom: 1px solid var(--border);
+  padding: 13px 16px;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--teal) 7%, var(--surface));
+  line-height: 1.6;
+}
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }

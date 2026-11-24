@@ -44,6 +44,11 @@ export function calculateComplianceScore(texts: RegulatoryText[]): number {
 
 @Injectable({ providedIn: 'root' })
 export class AppStateService {
+  readonly organization = {
+    name: 'DECOPLAST',
+    sector: 'Plasturgie',
+    location: 'Tunisie',
+  };
   readonly authenticated = signal(localStorage.getItem('vigilex-session') === 'active');
   readonly locale = signal<Locale>((localStorage.getItem('vigilex-locale') as Locale) || 'fr');
   readonly theme = signal<Theme>((localStorage.getItem('vigilex-theme') as Theme) || 'light');
@@ -52,17 +57,16 @@ export class AppStateService {
   readonly isRtl = computed(() => this.locale() === 'ar');
 
   readonly texts = signal<RegulatoryText[]>([
-    { id: 1, reference: 'Loi n° 2019-25', title: 'Sécurité et santé au travail', category: 'Loi', authority: 'Assemblée des représentants du peuple', date: '2019-03-26', theme: 'Santé & sécurité', conformity: 'Partiellement conforme', isNew: true },
-    { id: 2, reference: 'Décret n° 2006-2687', title: 'Étude d’impact sur l’environnement', category: 'Décret', authority: 'Ministère de l’Environnement', date: '2006-10-09', theme: 'Environnement', conformity: 'Conforme' },
-    { id: 3, reference: 'Loi n° 2015-12', title: 'Production de l’électricité à partir des énergies renouvelables', category: 'Loi', authority: 'Ministère de l’Énergie', date: '2015-05-11', theme: 'Énergie', conformity: 'Candidat conforme' },
-    { id: 4, reference: 'Arrêté du 15/01/2022', title: 'Valeurs limites des rejets industriels', category: 'Arrêté', authority: 'Ministère de l’Environnement', date: '2022-01-15', theme: 'Environnement', conformity: 'Non conforme' },
-    { id: 5, reference: 'Décret n° 2018-447', title: 'Gestion des déchets dangereux', category: 'Décret', authority: 'Ministère de l’Environnement', date: '2018-04-18', theme: 'Déchets', conformity: 'Non analysé' },
+    { id: 1, reference: 'Loi n° 96-41', title: 'Déchets : gestion et élimination', category: 'Loi', authority: 'République tunisienne', date: '1996-06-10', theme: 'Déchets industriels', conformity: 'Non analysé' },
+    { id: 2, reference: 'Décret n° 2005-1991', title: 'Étude d’impact sur l’environnement', category: 'Décret', authority: 'République tunisienne', date: '2005-07-11', theme: 'Environnement', conformity: 'Non analysé' },
+    { id: 3, reference: 'Loi n° 2007-34', title: 'Qualité de l’air', category: 'Loi', authority: 'République tunisienne', date: '2007-06-04', theme: 'Émissions atmosphériques', conformity: 'Non analysé' },
+    { id: 4, reference: 'Loi n° 2004-72', title: 'Maîtrise de l’énergie', category: 'Loi', authority: 'République tunisienne', date: '2004-08-02', theme: 'Énergie', conformity: 'Non analysé' },
   ]);
   readonly actions = signal<CorrectiveAction[]>([
-    { id: 1, title: 'Mettre à jour le plan de prévention', text: 'Loi n° 2019-25', owner: 'S. Ben Salah', due: '2026-11-27', priority: 'Haute', status: 'En cours' },
-    { id: 2, title: 'Former les équipes au tri sélectif', text: 'Décret n° 2018-447', owner: 'M. Trabelsi', due: '2026-11-29', priority: 'Moyenne', status: 'À faire' },
-    { id: 3, title: 'Réaliser les mesures de rejets', text: 'Arrêté du 15/01/2022', owner: 'A. Gharbi', due: '2026-12-03', priority: 'Haute', status: 'À faire' },
-    { id: 4, title: 'Documenter la revue énergétique', text: 'Loi n° 2015-12', owner: 'N. Mansour', due: '2026-12-08', priority: 'Basse', status: 'Réalisée' },
+    { id: 1, title: 'Cartographier les déchets de production', text: 'Loi n° 96-41', owner: 'Sarra Ben Salah', due: '2026-12-15', priority: 'Haute', status: 'À faire' },
+    { id: 2, title: 'Vérifier les exigences environnementales du site', text: 'Décret n° 2005-1991', owner: 'Mehdi Trabelsi', due: '2026-12-22', priority: 'Moyenne', status: 'À faire' },
+    { id: 3, title: 'Recenser les sources d’émissions atmosphériques', text: 'Loi n° 2007-34', owner: 'Nour Gharbi', due: '2027-01-08', priority: 'Haute', status: 'À faire' },
+    { id: 4, title: 'Établir le suivi des consommations énergétiques', text: 'Loi n° 2004-72', owner: 'Ayoub Ben Salem', due: '2027-01-15', priority: 'Moyenne', status: 'À faire' },
   ]);
 
   login(email: string, password: string): boolean {

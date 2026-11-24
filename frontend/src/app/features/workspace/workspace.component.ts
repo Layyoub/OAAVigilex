@@ -35,9 +35,9 @@ export class WorkspaceComponent {
   readonly newActionDue = signal('');
   readonly uploadError = signal('');
   readonly evidenceFiles = signal<EvidenceFile[]>([
-    { name: 'Rapport_audit_HSE_2026.pdf', size: 2_450_000, type: 'application/pdf', added: '18 nov. 2026' },
-    { name: 'Registre_formation_securite.xlsx', size: 830_000, type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', added: '14 nov. 2026' },
-    { name: 'Mesures_rejets_T3.png', size: 1_120_000, type: 'image/png', added: '08 nov. 2026' },
+    { name: 'Inventaire_dechets_decoplast.xlsx', size: 830_000, type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', added: '18 nov. 2026' },
+    { name: 'Diagnostic_emissions_site.pdf', size: 2_450_000, type: 'application/pdf', added: '14 nov. 2026' },
+    { name: 'Suivi_consommations_energetiques.png', size: 1_120_000, type: 'image/png', added: '08 nov. 2026' },
   ]);
   readonly visibleTexts = computed(() => {
     const query = this.search().trim().toLocaleLowerCase();
@@ -47,18 +47,25 @@ export class WorkspaceComponent {
       return matchesQuery && matchesStatus;
     });
   });
+  readonly reviewedTexts = computed(() => this.state.texts().filter(text => text.conformity !== 'Non analysé').length);
+  readonly analysisPercent = computed(() => this.state.texts().length
+    ? Math.round((this.reviewedTexts() / this.state.texts().length) * 100)
+    : 0);
+  readonly analysisProgressStyle = computed(() => `conic-gradient(var(--teal) 0 ${this.analysisPercent()}%, #e6efed ${this.analysisPercent()}% 100%)`);
   readonly openActions = computed(() => this.state.actions().filter(action => action.status !== 'Réalisée'));
+  readonly overdueActions = computed(() => this.state.actions().filter(action => action.status !== 'Réalisée' && action.due < this.today));
+  readonly today = new Date().toISOString().slice(0, 10);
   readonly adminUsers = [
-    { initials: 'AB', name: 'Ayoub Ben Salem', email: 'ayoub@tunis-industrie.tn', role: 'Responsable conformité', department: 'HSE', status: 'Actif' },
-    { initials: 'SB', name: 'Sarra Ben Salah', email: 'sarra@tunis-industrie.tn', role: 'Contributrice', department: 'Production', status: 'Actif' },
-    { initials: 'MT', name: 'Mehdi Trabelsi', email: 'mehdi@tunis-industrie.tn', role: 'Contributeur', department: 'Environnement', status: 'Actif' },
-    { initials: 'NG', name: 'Nour Gharbi', email: 'nour@tunis-industrie.tn', role: 'Lectrice', department: 'Qualité', status: 'Invitation envoyée' },
+    { initials: 'AB', name: 'Ayoub Ben Salem', email: 'ayoub@decoplast.tn', role: 'Responsable conformité', department: 'QHSE', status: 'Actif' },
+    { initials: 'SB', name: 'Sarra Ben Salah', email: 'sarra@decoplast.tn', role: 'Contributrice', department: 'Production', status: 'Actif' },
+    { initials: 'MT', name: 'Mehdi Trabelsi', email: 'mehdi@decoplast.tn', role: 'Contributeur', department: 'Maintenance', status: 'Actif' },
+    { initials: 'NG', name: 'Nour Gharbi', email: 'nour@decoplast.tn', role: 'Lectrice', department: 'Qualité', status: 'Invitation envoyée' },
   ];
   readonly departments = [
-    { name: 'Hygiène, sécurité & environnement', code: 'HSE', users: 8, texts: 18, score: 82 },
-    { name: 'Production', code: 'PROD', users: 24, texts: 12, score: 68 },
-    { name: 'Maintenance', code: 'MAINT', users: 11, texts: 9, score: 74 },
-    { name: 'Ressources humaines', code: 'RH', users: 6, texts: 7, score: 91 },
+    { name: 'Qualité, hygiène, sécurité & environnement', code: 'QHSE', users: 1, texts: 4, score: 0 },
+    { name: 'Production plastique', code: 'PROD', users: 1, texts: 4, score: 0 },
+    { name: 'Maintenance industrielle', code: 'MAINT', users: 1, texts: 2, score: 0 },
+    { name: 'Énergie & utilités', code: 'ENER', users: 1, texts: 1, score: 0 },
   ];
 
   t(key: string): string {

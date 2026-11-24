@@ -36,11 +36,11 @@ public class DemoDataInitializer implements ApplicationRunner {
     @Transactional
     public void run(ApplicationArguments args) {
         create(null, "admin@vigilex.local", "Administrateur Vigilex", "SUPER_ADMIN");
-        seedTenant("demo-nord", List.of(
-                new DemoUser("admin@nord.vigilex.local", "Administrateur Nord", "TENANT_ADMIN"),
-                new DemoUser("conformite@nord.vigilex.local", "Responsable conformité Nord", "RESP_CONFORMITE"),
-                new DemoUser("contributeur@nord.vigilex.local", "Contributeur Nord", "CONTRIBUTEUR"),
-                new DemoUser("lecture@nord.vigilex.local", "Lecteur Nord", "LECTEUR")));
+        seedTenant("decoplast", List.of(
+                new DemoUser("ayoub@decoplast.tn", "Ayoub Ben Salem", "TENANT_ADMIN"),
+                new DemoUser("conformite@decoplast.tn", "Sarra Ben Salah", "RESP_CONFORMITE"),
+                new DemoUser("production@decoplast.tn", "Mehdi Trabelsi", "CONTRIBUTEUR"),
+                new DemoUser("lecture@decoplast.tn", "Nour Gharbi", "LECTEUR")));
         seedTenant("demo-sud", List.of(
                 new DemoUser("admin@sud.vigilex.local", "Administrateur Sud", "TENANT_ADMIN"),
                 new DemoUser("conformite@sud.vigilex.local", "Responsable conformité Sud", "RESP_CONFORMITE"),
