@@ -4,14 +4,14 @@ import { expect, test } from '@playwright/test';
 test('sign in, review the library, create an action, and switch locale', async ({ page }) => {
   await page.goto('/login');
   await page.getByLabel('Adresse e-mail').fill('ayoub@tunis-industrie.tn');
-  await page.getByLabel('Mot de passe').fill('Vigilex2026!');
+  await page.getByRole('textbox', { name: 'Mot de passe' }).fill('Vigilex2026!');
   await page.getByRole('button', { name: 'Se connecter' }).click();
 
   await expect(page).toHaveURL(/\/dashboard$/);
   await expect(page.getByRole('heading', { name: 'Bonjour, Ayoub' })).toBeVisible();
   await page.getByRole('link', { name: 'Bibliothèque' }).click();
   await expect(page.getByRole('heading', { name: 'Bibliothèque réglementaire' })).toBeVisible();
-  await page.getByRole('searchbox').fill('Sécurité au travail');
+  await page.getByRole('searchbox').fill('2019-25');
   await page.getByLabel('Sélectionner Loi n° 2019-25').check();
   await page.getByRole('button', { name: 'Ajouter à Mes textes' }).first().click();
   await expect(page.getByRole('status')).toContainText('Texte ajouté à Mes textes');

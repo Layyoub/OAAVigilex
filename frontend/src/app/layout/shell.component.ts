@@ -77,6 +77,22 @@ export class ShellComponent {
     return this.i18n.t(key);
   }
 
+  get currentPageLabel(): string {
+    const page = this.router.url.split('?')[0].split('/').filter(Boolean).pop() || 'dashboard';
+    const label: Record<string, string> = {
+      dashboard: 'nav.dashboard',
+      library: 'nav.library',
+      'my-texts': 'nav.myTexts',
+      analysis: 'nav.analysis',
+      actions: 'nav.actions',
+      evidence: 'nav.evidence',
+      reports: 'nav.reports',
+      admin: 'nav.admin',
+      profile: 'nav.profile',
+    };
+    return this.t(label[page] ?? 'nav.dashboard');
+  }
+
   navigate(path: string): void {
     void this.router.navigateByUrl(path);
     this.commandOpen.set(false);
