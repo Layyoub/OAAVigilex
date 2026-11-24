@@ -12,4 +12,4 @@ Date: 2026-11-24
 - Backend: Maven test réussi; suite Java en compilation
 - Frontend: 3 tests Vitest réussis
 
-Docker Desktop peut nécessiter un démarrage de session ou une redémarrage système après l'installation initiale.
+WSL a été installé avec `wsl --install --no-distribution`. Windows doit être redémarré, puis Docker Desktop doit être relancé avant `scripts/dev.ps1`.

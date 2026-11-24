@@ -13,7 +13,7 @@
 - Tests Angular: 3/3 réussis.
 - Backend Maven test: réussi, aucun échec.
 - Testcontainers PostgreSQL: ignoré lorsque Docker Engine n'est pas démarré.
-- Docker Desktop installé; le moteur doit être démarré avant `scripts/dev.ps1`.
+- Docker Desktop installé et WSL activé; redémarrage Windows requis avant que le moteur Docker puisse démarrer, puis lancer `scripts/dev.ps1`.
 
 ## Points connus
 
