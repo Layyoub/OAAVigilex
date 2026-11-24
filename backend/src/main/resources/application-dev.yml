@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/vigilex}
+    username: ${DATABASE_USER:vigilex}
+    password: ${DATABASE_PASSWORD:vigilex}
+    hikari:
+      maximum-pool-size: 10
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:1025}
+    properties:
+      mail.smtp.auth: false
+      mail.smtp.starttls.enable: false
+logging:
+  level:
+    tn.vigilex: INFO

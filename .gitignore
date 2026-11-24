@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+target/
+node_modules/
+dist/
+.angular/
+.idea/
+.vscode/
+*.log
+coverage/
+test-results/
+playwright-report/
+.tools/

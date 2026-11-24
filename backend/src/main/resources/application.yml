@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: vigilex
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+server:
+  port: ${SERVER_PORT:8080}
+  forward-headers-strategy: framework
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+vigilex:
+  security:
+    jwt-secret: ${VIGILEX_JWT_SECRET:replace-this-local-development-secret-with-at-least-32-bytes}
+    access-ttl: PT15M
+    refresh-ttl: P30D
+    cookie-secure: ${VIGILEX_COOKIE_SECURE:false}
+  reset-url: ${VIGILEX_RESET_URL:http://localhost:4200/reset-password}
+  storage:
+    directory: ${VIGILEX_STORAGE:./data/evidence}
+  cors:
+    allowed-origins: ${VIGILEX_CORS_ORIGINS:http://localhost:4200}

@@ -1,0 +1,121 @@
+<!-- © 2026 Ayoub — Tous droits réservés. -->
+<section class="dashboard">
+  <div class="page-heading">
+    <div>
+      <div class="greeting-line"><span class="greeting-dot"></span><span>{{ t('dashboard.updated') }}</span></div>
+      <h1>{{ t('dashboard.hello') }} <span class="wave">✦</span></h1>
+      <p>{{ t('dashboard.subtitle') }}</p>
+    </div>
+    <button class="period-button" type="button" aria-label="Période : ce mois-ci">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+      {{ t('dashboard.month') }}
+      <svg class="period-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg>
+    </button>
+  </div>
+
+  <section class="score-card" aria-label="Score de conformité">
+    <div class="score-copy">
+      <div class="section-kicker"><span class="kicker-icon">↗</span>{{ t('dashboard.score') }}</div>
+      <div class="score-value">{{ score() }}<span>%</span></div>
+      <p>{{ t('dashboard.scoreHint') }}</p>
+      <div class="score-trend"><span>↗ 4,2 pts</span> {{ t('dashboard.trend') }}</div>
+    </div>
+    <div class="score-visual" aria-hidden="true">
+      <svg viewBox="0 0 260 155" class="score-arc">
+        <path class="arc-track" d="M25 130a105 105 0 0 1 210 0"/>
+        <path class="arc-value" d="M25 130a105 105 0 0 1 210 0" pathLength="100" [style.stroke-dasharray]="score() + ', 100'"/>
+      </svg>
+      <div class="arc-label"><strong>{{ score() }}<span>%</span></strong><small>+4,2 <span>↗</span></small></div>
+      <span class="arc-tick tick-start">0</span><span class="arc-tick tick-end">100</span>
+    </div>
+    <div class="score-side-note">
+      <span class="note-check"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></span>
+      <div><strong>Bonne progression</strong><span>Votre score progresse depuis le dernier mois.</span></div>
+    </div>
+  </section>
+
+  <section class="kpi-grid" aria-label="Indicateurs clés">
+    <article class="kpi-card">
+      <div class="kpi-top"><span class="kpi-label">{{ t('dashboard.texts') }}</span><span class="kpi-icon kpi-teal"><svg viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M14 3v5h5M8 13h8M8 17h5"/></svg></span></div>
+      <div class="kpi-value">{{ statCounts().texts }}<span class="kpi-change positive">+3</span></div>
+      <span class="kpi-foot">+12 % {{ t('dashboard.trend') }}</span>
+      <svg class="sparkline spark-teal" viewBox="0 0 96 24" aria-label="Tendance en hausse"><path d="m1 19 14-4 12 3 12-10 12 5 12-7 12 2 11-7"/></svg>
+    </article>
+    <article class="kpi-card">
+      <div class="kpi-top"><span class="kpi-label">{{ t('dashboard.unanalyzed') }}</span><span class="kpi-icon kpi-blue"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span></div>
+      <div class="kpi-value">{{ statCounts().unanalyzed }}<span class="kpi-change neutral">−2</span></div>
+      <span class="kpi-foot">2 textes à examiner</span>
+      <svg class="sparkline spark-blue" viewBox="0 0 96 24" aria-label="Tendance"><path d="m1 5 13 3 12-1 12 6 12-2 12 6 12-1 11 4"/></svg>
+    </article>
+    <article class="kpi-card">
+      <div class="kpi-top"><span class="kpi-label">{{ t('dashboard.noncompliant') }}</span><span class="kpi-icon kpi-red"><svg viewBox="0 0 24 24"><path d="m12 3 10 18H2z"/><path d="M12 9v5M12 18h.01"/></svg></span></div>
+      <div class="kpi-value">{{ statCounts().noncompliant }}<span class="kpi-change positive">−1</span></div>
+      <span class="kpi-foot">À traiter en priorité</span>
+      <svg class="sparkline spark-red" viewBox="0 0 96 24" aria-label="Tendance en baisse"><path d="m1 4 13 5 12-1 12 5 12-2 12 6 12-2 11 6"/></svg>
+    </article>
+    <article class="kpi-card">
+      <div class="kpi-top"><span class="kpi-label">{{ t('dashboard.overdue') }}</span><span class="kpi-icon kpi-amber"><svg viewBox="0 0 24 24"><path d="M12 8v4l2.5 2.5"/><circle cx="12" cy="12" r="9"/></svg></span></div>
+      <div class="kpi-value">{{ statCounts().overdue }}<span class="kpi-suffix">actions</span></div>
+      <span class="kpi-foot">1 échéance cette semaine</span>
+      <svg class="sparkline spark-amber" viewBox="0 0 96 24" aria-label="Tendance"><path d="m1 12 13-6 12 4 12-5 12 8 12-3 12 8 11-4"/></svg>
+    </article>
+  </section>
+
+  <section class="visual-grid">
+    <article class="panel status-panel">
+      <div class="panel-heading"><div><h2>{{ t('dashboard.status') }}</h2><p>Répartition de votre registre</p></div><button class="more-button" aria-label="Plus d’options" type="button">···</button></div>
+      <div class="donut-content">
+        <div class="donut" [style.background]="donutGradient" role="img" aria-label="Répartition des statuts">
+          <div class="donut-hole"><strong>{{ state.texts().length }}</strong><span>textes</span></div>
+        </div>
+        <div class="legend">
+          @for (segment of segments(); track segment.key) {
+            <div class="legend-item"><span class="legend-color" [style.background]="segment.color"></span><span>{{ t(segment.key) }}</span><strong>{{ segment.count }}</strong></div>
+          }
+        </div>
+      </div>
+      <a class="panel-link" routerLink="/analysis">{{ t('dashboard.viewAll') }} <span>→</span></a>
+    </article>
+
+    <article class="panel department-panel">
+      <div class="panel-heading"><div><h2>{{ t('dashboard.department') }}</h2><p>Score moyen par équipe</p></div><button class="select-period" type="button">Ce mois <svg viewBox="0 0 24 24"><path d="m8 10 4 4 4-4"/></svg></button></div>
+      <div class="department-chart">
+        <div class="axis-labels"><span>100%</span><span>75%</span><span>50%</span><span>25%</span><span>0%</span></div>
+        <div class="bar-chart">
+          <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i></div>
+          @for (department of departmentBars; track department.name) {
+            <div class="bar-column"><div class="bar-track"><span class="bar-value" [style.height.%]="department.value" [style.background]="department.color"><span>{{ department.value }}%</span></span></div><span class="bar-label">{{ department.name }}</span></div>
+          }
+        </div>
+      </div>
+      <div class="department-foot"><span class="foot-dot"></span><span>Score moyen</span><strong>79 %</strong><span class="department-change">+ 3,6 pts ce mois</span></div>
+    </article>
+  </section>
+
+  <section class="bottom-grid">
+    <article class="panel deadlines-panel">
+      <div class="panel-heading"><div><h2>{{ t('dashboard.deadlines') }}</h2><p>Vos prochaines actions à suivre</p></div><a class="text-link" routerLink="/actions">{{ t('dashboard.viewAll') }} <span>→</span></a></div>
+      <div class="deadline-list">
+        @for (deadline of deadlines; track deadline.title) {
+          <a class="deadline-item" routerLink="/actions">
+            <span class="deadline-date" [class]="deadline.state"><strong>{{ deadline.day }}</strong><small>{{ deadline.month }}</small></span>
+            <span class="deadline-info"><strong>{{ deadline.title }}</strong><small>{{ deadline.text }}</small></span>
+            <span class="deadline-arrow">↗</span>
+          </a>
+        }
+      </div>
+    </article>
+    <article class="panel recent-panel">
+      <div class="panel-heading"><div><h2>{{ t('dashboard.recent') }}</h2><p>Dans la bibliothèque générale</p></div><a class="text-link" routerLink="/library">{{ t('dashboard.viewAll') }} <span>→</span></a></div>
+      <div class="recent-list">
+        @for (text of state.texts().slice(0, 3); track text.id) {
+          <a class="recent-item" routerLink="/library">
+            <span class="document-icon"><svg viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg></span>
+            <span class="recent-info"><strong>{{ text.reference }}</strong><small>{{ text.title }}</small></span>
+            <span class="status-pill" [class]="text.conformity.toLowerCase().replaceAll(' ', '-')">{{ statusLabel(text.conformity) }}</span>
+          </a>
+        }
+      </div>
+    </article>
+  </section>
+</section>

@@ -1,0 +1,149 @@
+<!-- © 2026 Ayoub — Tous droits réservés. -->
+<div class="app-frame" [class.sidebar-collapsed]="state.sidebarCollapsed()" [class.mobile-nav-open]="mobileNavOpen()">
+  <aside class="sidebar" aria-label="Navigation principale">
+    <a class="brand-lockup" routerLink="/dashboard" aria-label="Vigilex, accueil">
+      <svg class="brand-mark" viewBox="0 0 42 46" aria-hidden="true">
+        <path d="M21 3 37 9v12c0 10.1-6.1 17.8-16 22C11.1 38.8 5 31.1 5 21V9L21 3Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+        <path d="m13.5 22.5 5.5 5.5 10-11" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8 11c4-5 9-7 13-8" fill="none" stroke="#0fa3a3" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-name">vigilex<span>.</span></span>
+      <span class="brand-beta">PRO</span>
+    </a>
+
+    <div class="organization-switcher">
+      <div class="org-monogram">TI</div>
+      <div class="org-details"><strong>{{ t('header.org') }}</strong><span>Industrie · Tunisie</span></div>
+      <svg class="org-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg>
+    </div>
+
+    <div class="nav-group">
+      <p class="nav-caption">{{ t('nav.workspace') }}</p>
+      <nav aria-label="Espace de travail">
+        @for (item of workspaceItems; track item.path) {
+          <a class="nav-link" [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [matTooltip]="state.sidebarCollapsed() ? t(item.label) : ''" matTooltipPosition="right">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              @switch (item.icon) {
+                @case ('grid') { <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/> }
+                @case ('book') { <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 1 4 17.5z"/><path d="M4 17.5A2.5 2.5 0 0 1 6.5 15H20M8 7h8M8 10h7"/> }
+                @case ('files') { <path d="M14 2H6a2 2 0 0 0-2 2v12"/><path d="M18 6H10a2 2 0 0 0-2 2v12h12V10z"/><path d="M14 6v4h4"/> }
+                @case ('chart') { <path d="M4 19V5M4 19h17"/><path d="m7 15 4-5 3 2 5-7"/> }
+                @case ('checklist') { <rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8 9 1.5 1.5L12 8M14 9h3M8 15l1.5 1.5L12 14M14 15h3"/> }
+                @case ('folder') { <path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/> }
+                @case ('report') { <path d="M5 3h10l4 4v14H5z"/><path d="M14 3v5h5M8 13h8M8 17h8M8 9h2"/> }
+                @case ('settings') { <path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.8-.6a8 8 0 0 1-1.4.8l-.4 1.9h-2.8l-.4-1.9a8 8 0 0 1-1.4-.8l-1.8.6-1.4-2.4 1.4-1.1a7 7 0 0 1 0-1.8L6.7 12l1.4-2.4 1.8.6a8 8 0 0 1 1.4-.8l.4-1.9h2.8l.4 1.9a8 8 0 0 1 1.4.8l1.8-.6 1.4 2.4-1.4 1.1a7 7 0 0 1-.1 1.9Z"/> }
+                @case ('user') { <circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/> }
+              }
+            </svg>
+            <span class="nav-label">{{ t(item.label) }}</span>
+            @if (item.badge) { <span class="nav-badge">{{ item.badge }}</span> }
+          </a>
+        }
+      </nav>
+    </div>
+
+    <div class="nav-group manage-group">
+      <p class="nav-caption">{{ t('nav.manage') }}</p>
+      <nav aria-label="Gestion">
+        @for (item of manageItems; track item.path) {
+          <a class="nav-link" [routerLink]="item.path" routerLinkActive="active" [matTooltip]="state.sidebarCollapsed() ? t(item.label) : ''" matTooltipPosition="right">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              @if (item.icon === 'settings') { <circle cx="12" cy="12" r="3"/><path d="m19.4 15 1.4 1.1-1.4 2.4-1.8-.6a8 8 0 0 1-1.4.8l-.4 1.9h-2.8l-.4-1.9a8 8 0 0 1-1.4-.8l-1.8.6-1.4-2.4L7.4 15a7 7 0 0 1 0-2L6 11.9l1.4-2.4 1.8.6a8 8 0 0 1 1.4-.8l.4-1.9h2.8l.4 1.9a8 8 0 0 1 1.4.8l1.8-.6 1.4 2.4-1.4 1.1a7 7 0 0 1 0 2Z"/> }
+              @else { <circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/> }
+            </svg>
+            <span class="nav-label">{{ t(item.label) }}</span>
+          </a>
+        }
+      </nav>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="compliance-tip">
+        <div class="tip-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3M5.6 5.6l2.1 2.1M3 12h3M18 12h3M16.3 7.7l2.1-2.1"/><path d="M8.5 17a6 6 0 1 1 7 0l-.5 2h-6zM9 22h6"/></svg></div>
+        <div><strong>Le saviez-vous ?</strong><span>Une revue régulière renforce votre conformité.</span></div>
+      </div>
+      <button class="collapse-button" type="button" [attr.aria-label]="state.sidebarCollapsed() ? t('header.expand') : t('header.collapse')" (click)="state.toggleSidebar()">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 18-6-6 6-6"/></svg><span>{{ state.sidebarCollapsed() ? t('header.expand') : t('header.collapse') }}</span>
+      </button>
+      <div class="sidebar-footer">© 2026 Vigilex <span>·</span> v1.0</div>
+    </div>
+  </aside>
+
+  @if (mobileNavOpen()) { <button class="mobile-backdrop" type="button" aria-label="Fermer le menu" (click)="mobileNavOpen.set(false)"></button> }
+
+  <div class="main-column">
+    <header class="topbar">
+      <button class="icon-button mobile-menu" type="button" aria-label="Ouvrir le menu" (click)="mobileNavOpen.set(true)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <div class="breadcrumbs"><span>{{ t('header.org') }}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg><strong>{{ t('nav.dashboard') }}</strong></div>
+      <div class="topbar-actions">
+        <button class="global-search" type="button" (click)="commandOpen.set(true)" aria-label="Recherche globale, Ctrl+K">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg>
+          <span>{{ t('header.search') }}</span><kbd>Ctrl K</kbd>
+        </button>
+        <div class="topbar-divider"></div>
+        <div class="popover-anchor">
+          <button class="icon-button notification-button" type="button" [attr.aria-label]="t('header.notifications')" [attr.aria-expanded]="notificationsOpen()" (click)="notificationsOpen.update(v => !v); userMenuOpen.set(false)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span class="notification-dot"></span>
+          </button>
+          @if (notificationsOpen()) {
+            <div class="popover notification-popover">
+              <div class="popover-heading"><strong>{{ t('header.notifications') }}</strong><span class="unread-label">2 nouvelles</span></div>
+              <div class="notification-item"><span class="notification-icon overdue-icon">!</span><div><strong>Échéance dans 3 jours</strong><p>Plan de prévention · Loi n° 2019-25</p><small>Il y a 2 h</small></div></div>
+              <div class="notification-item"><span class="notification-icon new-icon">↗</span><div><strong>Nouveau texte réglementaire</strong><p>Décret relatif aux déchets industriels</p><small>Hier</small></div></div>
+              <a routerLink="/actions" (click)="notificationsOpen.set(false)">Voir toutes les notifications <span>→</span></a>
+            </div>
+          }
+        </div>
+        <div class="topbar-divider short-divider"></div>
+        <div class="locale-control" role="group" [attr.aria-label]="t('header.language')">
+          <button type="button" [class.selected]="state.locale() === 'fr'" (click)="setLocale('fr')" aria-label="Français">FR</button>
+          <button type="button" [class.selected]="state.locale() === 'en'" (click)="setLocale('en')" aria-label="English">EN</button>
+          <button type="button" [class.selected]="state.locale() === 'ar'" (click)="setLocale('ar')" aria-label="العربية">ع</button>
+        </div>
+        <button class="icon-button theme-button" type="button" [attr.aria-label]="t('header.theme')" (click)="state.toggleTheme()">
+          @if (state.theme() === 'light') { <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 15.4A8.5 8.5 0 0 1 8.6 3.5 8.5 8.5 0 1 0 20.5 15.4Z"/></svg> }
+          @else { <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg> }
+        </button>
+        <div class="popover-anchor user-anchor">
+          <button class="user-menu-button" type="button" aria-label="Ouvrir le menu du compte" [attr.aria-expanded]="userMenuOpen()" (click)="userMenuOpen.update(v => !v); notificationsOpen.set(false)">
+            <span class="avatar">AB</span><span class="user-meta"><strong>Ayoub Ben Salem</strong><small>Responsable conformité</small></span>
+            <svg class="user-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg>
+          </button>
+          @if (userMenuOpen()) {
+            <div class="popover user-popover">
+              <div class="account-card"><span class="avatar">AB</span><div><strong>Ayoub Ben Salem</strong><small>ayoub&#64;tunis-industrie.tn</small></div></div>
+              <a routerLink="/profile" (click)="userMenuOpen.set(false)">{{ t('nav.profile') }}</a>
+              <button type="button" (click)="logout()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>{{ t('header.logout') }}</button>
+            </div>
+          }
+        </div>
+      </div>
+    </header>
+
+    <main class="page-content"><router-outlet /></main>
+  </div>
+
+  @if (commandOpen()) {
+    <div class="command-overlay" (click)="commandOpen.set(false)">
+      <section class="command-dialog" role="dialog" aria-modal="true" aria-label="Recherche globale" (click)="$event.stopPropagation()">
+        <div class="command-input">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg>
+          <input id="command-search" type="search" [value]="search()" (input)="search.set($any($event.target).value)" [attr.placeholder]="t('header.search')" autocomplete="off">
+          <kbd>ESC</kbd>
+        </div>
+        <p class="command-label">{{ search() ? t('common.search') : 'NAVIGATION RAPIDE' }}</p>
+        @for (item of filteredItems(); track item.path) {
+          <button class="command-result" type="button" (click)="navigate(item.path)">
+            <span class="command-result-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h16"/></svg></span>
+            <span>{{ t(item.label) }}</span><kbd>↵</kbd>
+          </button>
+        } @empty { <p class="no-results">Aucun résultat pour cette recherche.</p> }
+        <div class="command-footer"><span><kbd>↑</kbd><kbd>↓</kbd> naviguer</span><span><kbd>↵</kbd> ouvrir</span><span><kbd>esc</kbd> fermer</span></div>
+      </section>
+    </div>
+  }
+
+  @if (state.toast()) { <div class="toast-message" role="status"><span>✓</span>{{ state.toast() }}</div> }
+</div>
