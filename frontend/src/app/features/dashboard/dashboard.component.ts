@@ -14,11 +14,12 @@ export class DashboardComponent {
   readonly state = inject(AppStateService);
   private readonly i18n = inject(I18nService);
   readonly score = computed(() => calculateComplianceScore(this.state.texts()));
+  readonly openActions = computed(() => this.state.actions().filter(action => action.status !== 'Réalisée'));
   readonly statCounts = computed(() => ({
     texts: this.state.texts().length,
     unanalyzed: this.state.texts().filter(text => text.conformity === 'Non analysé').length,
     noncompliant: this.state.texts().filter(text => text.conformity === 'Non conforme').length,
-    overdue: this.state.actions().filter(action => action.status !== 'Réalisée' && action.due < '2026-11-24').length,
+    overdue: this.state.actions().filter(action => action.status !== 'Réalisée' && action.due < new Date().toISOString().slice(0, 10)).length,
   }));
   readonly segments = computed(() => {
     const texts = this.state.texts();
@@ -31,16 +32,25 @@ export class DashboardComponent {
     ];
   });
   readonly departmentBars = [
-    { name: 'HSE', value: 82, color: 'var(--teal)' },
-    { name: 'Production', value: 68, color: '#4673a0' },
-    { name: 'Maintenance', value: 74, color: '#7995b2' },
-    { name: 'Ressources humaines', value: 91, color: '#9ab6aa' },
+    { name: 'Production', value: 0, color: 'var(--teal)' },
+    { name: 'QHSE', value: 0, color: '#4673a0' },
+    { name: 'Maintenance', value: 0, color: '#7995b2' },
+    { name: 'Énergie', value: 0, color: '#9ab6aa' },
   ];
-  readonly deadlines = [
-    { day: '27', month: 'NOV', title: 'Mettre à jour le plan de prévention', text: 'Loi n° 2019-25', state: 'urgent' },
-    { day: '29', month: 'NOV', title: 'Formation au tri sélectif', text: 'Décret n° 2018-447', state: 'soon' },
-    { day: '03', month: 'DÉC', title: 'Mesures de rejets industriels', text: 'Arrêté du 15/01/2022', state: 'normal' },
-  ];
+  readonly deadlines = computed(() => this.state.actions()
+    .filter(action => action.status !== 'Réalisée')
+    .sort((left, right) => left.due.localeCompare(right.due))
+    .slice(0, 3)
+    .map(action => {
+      const date = new Date(`${action.due}T12:00:00`);
+      return {
+        day: new Intl.DateTimeFormat('fr-TN', { day: '2-digit' }).format(date),
+        month: new Intl.DateTimeFormat('fr-TN', { month: 'short' }).format(date).replace('.', '').toUpperCase(),
+        title: action.title,
+        text: action.text,
+        state: action.priority === 'Haute' ? 'urgent' : action.priority === 'Moyenne' ? 'soon' : 'normal',
+      };
+    }));
 
   t(key: string): string {
     return this.i18n.t(key);

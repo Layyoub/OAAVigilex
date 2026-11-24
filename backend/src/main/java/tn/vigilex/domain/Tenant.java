@@ -19,6 +19,10 @@ public class Tenant {
     @Column(nullable = false, unique = true) private String slug;
     private String logoPath;
     private String sector;
+    @Column(name = "country_code", nullable = false, length = 2)
+    private String countryCode = "TN";
+    @Column(length = 120)
+    private String city;
     @Column(nullable = false) private String defaultLocale = "fr";
     @Column(nullable = false) private String status = "ACTIVE";
     @Column(nullable = false) private Instant createdAt = Instant.now();

@@ -1,6 +1,6 @@
 /* © 2026 Ayoub — Tous droits réservés. */
 import { describe, expect, it } from 'vitest';
-import { calculateComplianceScore, RegulatoryText } from './app-state.service';
+import { AppStateService, calculateComplianceScore, RegulatoryText } from './app-state.service';
 
 const text = (conformity: RegulatoryText['conformity']): RegulatoryText => ({
   id: 1,
@@ -30,5 +30,20 @@ describe('calculateComplianceScore', () => {
   it('returns zero when no text has been analyzed', () => {
     expect(calculateComplianceScore([text('Non analysé')])).toBe(0);
     expect(calculateComplianceScore([])).toBe(0);
+  });
+});
+
+describe('DECOPLAST demo workspace', () => {
+  it('starts with Tunisian reference texts awaiting a real applicability review', () => {
+    const workspace = new AppStateService();
+
+    expect(workspace.organization.name).toBe('DECOPLAST');
+    expect(workspace.texts().map(item => item.reference)).toEqual([
+      'Loi n° 96-41',
+      'Décret n° 2005-1991',
+      'Loi n° 2007-34',
+      'Loi n° 2004-72',
+    ]);
+    expect(workspace.texts().every(item => item.conformity === 'Non analysé')).toBe(true);
   });
 });

@@ -32,9 +32,9 @@ export class ShellComponent {
   readonly workspaceItems: NavigationItem[] = [
     { label: 'nav.dashboard', path: '/dashboard', icon: 'grid' },
     { label: 'nav.library', path: '/library', icon: 'book' },
-    { label: 'nav.myTexts', path: '/my-texts', icon: 'files', badge: '24' },
+    { label: 'nav.myTexts', path: '/my-texts', icon: 'files', badge: '4' },
     { label: 'nav.analysis', path: '/analysis', icon: 'chart' },
-    { label: 'nav.actions', path: '/actions', icon: 'checklist', badge: '3' },
+    { label: 'nav.actions', path: '/actions', icon: 'checklist', badge: '4' },
     { label: 'nav.evidence', path: '/evidence', icon: 'folder' },
     { label: 'nav.reports', path: '/reports', icon: 'report' },
   ];

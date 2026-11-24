@@ -23,7 +23,7 @@ import java.util.*;
 @Service
 public class AdminService {
     private static final Set<String> TEXT_TYPES = Set.of("LAW", "DECREE", "DECREE_LAW", "ORDER", "CIRCULAR", "COMMUNIQUE", "STANDARD");
-    private static final Set<String> TEXT_STATUSES = Set.of("IN_FORCE", "REPEALED", "AMENDED");
+    private static final Set<String> TEXT_STATUSES = Set.of("IN_FORCE", "REPEALED", "AMENDED", "TO_VERIFY");
     private static final Set<String> ROLES = Set.of("SUPER_ADMIN", "TENANT_ADMIN", "RESP_CONFORMITE", "CONTRIBUTEUR", "LECTEUR");
     private final LawTextRepository lawTexts;
     private final LawTextVersionRepository versions;
